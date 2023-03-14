@@ -7,9 +7,11 @@ import { UniversityModel } from "../../../../../src/infra/database/mongodb/model
 
 describe("UniversityReposiroty", () => {
   let universityRepository: UniversityRepository;
+  const universityModel = UniversityModel;
 
   beforeAll(async () => {
     await startDatabase();
+    universityRepository = new UniversityRepository(universityModel);
   });
 
   afterAll(async () => {
@@ -18,10 +20,6 @@ describe("UniversityReposiroty", () => {
 
   describe("saveUniversity", () => {
     it("should save university", async () => {
-      const universityModel = UniversityModel;
-
-      universityRepository = new UniversityRepository(universityModel);
-
       const universitySaved = await universityRepository.save({
         domains: ["claeh.edu.uy"],
         country: "Uruguay",
