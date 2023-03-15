@@ -44,8 +44,14 @@ export class UniversityServices {
     try {
       const pageoffset = (page - 1) * DEFAULT_PAGE_LIMIT;
 
+      let countryFilter = {};
+
+      if (country) {
+        countryFilter = { country };
+      }
+
       return await this.universityrepository.findMany(
-        { country },
+        countryFilter,
         DEFAULT_PAGE_LIMIT,
         pageoffset
       );
