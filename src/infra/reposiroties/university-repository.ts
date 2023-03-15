@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { InternalServerErrorExpection } from "../database/errors/erros";
 import {
   IUniversityModel,
   University
@@ -16,14 +17,14 @@ export class UniversityRepository implements IReposiroty {
         deleted_at: null
       });
     } catch (error) {
-      throw new Error();
+      throw new InternalServerErrorExpection();
     }
   }
   async save(university: University): Promise<IUniversityModel> {
     try {
       return (await this.universityModel.create(university)).save();
     } catch (error) {
-      throw new Error();
+      throw new InternalServerErrorExpection();
     }
   }
 
@@ -35,7 +36,7 @@ export class UniversityRepository implements IReposiroty {
       );
       return this.universityModel.insertMany(universitiesWithObjectId);
     } catch (error) {
-      throw new Error();
+      throw new InternalServerErrorExpection();
     }
   }
 
@@ -56,7 +57,7 @@ export class UniversityRepository implements IReposiroty {
 
       return universities.filter((university: any) => !university.deleted_at);
     } catch (error) {
-      throw new Error();
+      throw new InternalServerErrorExpection();
     }
   }
 
@@ -68,7 +69,7 @@ export class UniversityRepository implements IReposiroty {
         { new: true }
       );
     } catch (error) {
-      throw new Error();
+      throw new InternalServerErrorExpection();
     }
   }
 }
