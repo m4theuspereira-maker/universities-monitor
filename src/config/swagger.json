@@ -1,0 +1,84 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Universities Monitor",
+    "version": "1.0.0"
+  },
+  "servers": [{ "url": "http://localhost:3000/" }],
+  "paths": {
+    "/universities": {
+      "post": {
+        "summary": "Registre an University",
+        "description": "This route registres a new university",
+        "tags": ["university"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/University"
+              },
+              "examples": {
+                "university": {
+                  "value": {
+                    "state_province": null,
+                    "domains": ["claeh.edu.uy"],
+                    "country": "Uruguay",
+                    "web_pages": ["http://www.claeh.edu.uy/"],
+                    "name": "Insituto Universitario - Centro Latinoamericano de Economia Humana - IU Claeh",
+                    "alpha_two_code": "UY"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/University"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "University": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "state_province": {
+            "type": "string",
+            "nullable": true
+          },
+          "domains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "country": { "type": "string" },
+          "web_pages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "alpha_two_code": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
