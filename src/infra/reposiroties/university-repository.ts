@@ -23,7 +23,6 @@ export class UniversityRepository implements IReposiroty {
     try {
       return (await this.universityModel.create(university)).save();
     } catch (error) {
-      console.log(error);
       throw new Error();
     }
   }
