@@ -9,14 +9,67 @@ export class UniversityRepository implements IReposiroty {
   constructor(
     private readonly universityModel: mongoose.Model<IUniversityModel>
   ) {}
-  findOne(id: string): Promise<any> {
-    throw new Error("Method not implemented.");
+  async findOne(id: string): Promise<IUniversityModel | null> {
+    try {
+      return this.universityModel.findOne({
+        _id: new mongoose.Types.ObjectId(id),
+        deleted_at: null
+      });
+    } catch (error) {
+      throw new Error();
+    }
   }
-  async save(university: University): Promise<any> {
+  async save(university: University): Promise<IUniversityModel> {
     try {
       return (await this.universityModel.create(university)).save();
     } catch (error) {
-      new Error();
+      console.log(error);
+      throw new Error();
+    }
+  }
+
+  async saveMany(universities: University[]): Promise<IUniversityModel[]> {
+    try {
+      const universitiesWithObjectId = universities.map(
+        (university) =>
+          (university = { _id: new mongoose.Types.ObjectId(), ...university })
+      );
+      return this.universityModel.insertMany(universitiesWithObjectId);
+    } catch (error) {
+      throw new Error();
+    }
+  }
+
+  async findMany(
+    filter: any,
+    limit: number,
+    offset: number
+  ): Promise<IUniversityModel[]> {
+    try {
+      const universities = await this.universityModel
+        .find(filter)
+        .limit(limit)
+        .skip(offset);
+
+      if (!universities.length) {
+        return universities;
+      }
+
+      return universities.filter((university: any) => !university.deleted_at);
+    } catch (error) {
+      throw new Error();
+    }
+  }
+
+  async update(id: string, updatePayload: any): Promise<any | null> {
+    try {
+      return this.universityModel.findOneAndUpdate(
+        { _id: new mongoose.Types.ObjectId(id) },
+        { updated_at: new Date(), ...updatePayload },
+        { new: true }
+      );
+    } catch (error) {
+      throw new Error();
     }
   }
 }

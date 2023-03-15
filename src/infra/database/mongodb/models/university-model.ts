@@ -1,6 +1,7 @@
 import { Types, Document, Schema, model } from "mongoose";
 
 export interface University {
+  _id?: Types.ObjectId;
   state_province?: string;
   domains: string[];
   country: string;
