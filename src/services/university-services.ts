@@ -1,5 +1,5 @@
 import { DEFAULT_PAGE_LIMIT } from "../config/environment-consts";
-import { InternalServerErrorExpection } from "../infra/database/errors/erros";
+import { InternalServerErrorExpection } from "../infra/errors/erros";
 import { University } from "../infra/database/mongodb/models/university-model";
 import { UniversityRepository } from "../infra/reposiroties/university-repository";
 

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { InternalServerErrorExpection } from "../database/errors/erros";
+import { InternalServerErrorExpection } from "../errors/erros";
 import {
   IUniversityModel,
   University
