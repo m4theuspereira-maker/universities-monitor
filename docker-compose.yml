@@ -1,8 +1,8 @@
 version: "3.7"
 
 services:
-  template:
-    container_name: template
+  universities:
+    container_name: universities
     build:
       context: ./
       dockerfile: ./Dockerfile
@@ -13,3 +13,18 @@ services:
       - "3000:3000"
     volumes:
       - "./:/app"
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: MongoDB2019!
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    networks:
+      - mongo-compose-network
+
+networks:
+    mongo-compose-network:
+      driver: bridge
