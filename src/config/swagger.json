@@ -11,6 +11,11 @@
         "summary": "Registre an University",
         "description": "This route registres a new university",
         "tags": ["university"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -44,6 +49,21 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "UNAUTHORIZED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "no token provided"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -53,6 +73,11 @@
         "summary": "Get an university by id",
         "description": "this route gets an university by its id",
         "tags": ["university"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "universityId",
@@ -88,6 +113,21 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "UNAUTHORIZED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "no token provided"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -97,6 +137,11 @@
         "summary": "Get an university by id",
         "description": "this route gets an university by its id",
         "tags": ["university"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "page",
@@ -123,6 +168,21 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "UNAUTHORIZED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "no token provided"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -132,6 +192,11 @@
         "summary": "Get an university by id",
         "description": "this route gets an university by its id",
         "tags": ["university"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "universityToBeUpdatedId",
@@ -204,6 +269,21 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "UNAUTHORIZED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "no token provided"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -213,6 +293,11 @@
         "summary": "Get an university by id",
         "description": "this route gets an university by its id",
         "tags": ["university"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "universityToBeDeletedId",
@@ -243,6 +328,282 @@
                     "error": {
                       "type": "string",
                       "example": "university not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "UNAUTHORIZED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "no token provided"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/create": {
+      "post": {
+        "summary": "Registre of a new user",
+        "description": "This route registres a new user",
+        "tags": ["user"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "nullable": false
+                  },
+                  "password": {
+                    "type": "string",
+                    "nullable": false
+                  },
+                  "repeat_password": {
+                    "type": "string",
+                    "nullable": false
+                  }
+                }
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "username": "jubileu",
+                    "password": "1234",
+                    "repeat_password": "1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "64138c1996b2eeb9468cf60f"
+                    },
+                    "username": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "jubileu"
+                    },
+                    "password": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "1234"
+                    },
+                    "create_at": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "2023-03-16T16:35:38.161Z"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": null
+                    },
+                    "deleted_at": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "summary": "Login",
+        "description": "This endpoint returns a logged user with token",
+        "tags": ["user"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "nullable": false
+                  },
+                  "password": {
+                    "type": "string",
+                    "nullable": false
+                  }
+                }
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "username": "jubileu",
+                    "password": "1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "jubileu"
+                    },
+                    "password": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "4321"
+                    },
+                    "token": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "UNAUTHORIZED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "no token provided"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/reset": {
+      "put": {
+        "summary": "Reset password",
+        "description": "This endpoint reset a password and a new token",
+        "tags": ["user"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "nullable": false
+                  },
+                  "old_password": {
+                    "type": "string",
+                    "nullable": false
+                  },
+                  "new_password": {
+                    "type": "string",
+                    "nullable": false
+                  }
+                }
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "username": "jubileu",
+                    "old_password": "1234",
+                    "new_password": "4321"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "64138c1996b2eeb9468cf60f"
+                    },
+                    "username": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "jubileu"
+                    },
+                    "password": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "$2b$08$FAbX1M7T/jzAjiDQviPfUu52FnwXGLuqXWV9SDUmF9sZRsOL.aoTi"
+                    },
+                    "create_at": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "2023-03-16T16:35:38.161Z"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": null
+                    },
+                    "deleted_at": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": null
+                    },
+                    "token": {
+                      "type": "string",
+                      "nullable": false,
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "UNAUTHORIZED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "no token provided"
                     }
                   }
                 }
@@ -282,6 +643,13 @@
             "type": "string"
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
