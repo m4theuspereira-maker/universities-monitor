@@ -70,12 +70,12 @@ export class UniversityController {
 
   updateUniversity = async (req: Request, res: Response) => {
     try {
-      const { universityId } = req.params;
+      const { universityToBeUpdatedId } = req.params;
       const updatePaylaod = req.body;
 
 
       const universitiesFound = await this.universityService.updateUniversity(
-        universityId,
+        universityToBeUpdatedId,
         { ...updatePaylaod }
       );
 
@@ -91,17 +91,17 @@ export class UniversityController {
 
   deleteUniversity = async (req: Request, res: Response) => {
     try {
-      const { universityId } = req.params;
+      const { universityToBeDeletedId } = req.params;
 
-      const universitiesFound = await this.universityService.deleteUniversity(
-        universityId,
+      const universityDeleted = await this.universityService.deleteUniversity(
+        universityToBeDeletedId,
       );
 
-      if (!universitiesFound) {
+      if (!universityDeleted) {
         return notFoundError(res, "university not found");
       }
 
-      return ok(res, universitiesFound);
+      return ok(res, universityDeleted);
     } catch (error) {
       return serverError(res, error);
     }

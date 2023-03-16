@@ -15,11 +15,11 @@ routes.get(
   universityController.getUniversityById
 );
 routes.put(
-  "/universities/:universityId",
+  "/universities/:universityToBeUpdatedId",
   universityController.updateUniversity
 );
 routes.delete(
-  "/universities/:universityId",
+  "/universities/:universityToBeDeletedId",
   universityController.deleteUniversity
 );
 

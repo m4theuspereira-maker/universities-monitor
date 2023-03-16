@@ -47,6 +47,210 @@
           }
         }
       }
+    },
+    "/universities/{universityId}": {
+      "get": {
+        "summary": "Get an university by id",
+        "description": "this route gets an university by its id",
+        "tags": ["university"],
+        "parameters": [
+          {
+            "name": "universityId",
+            "in": "path",
+            "required": true,
+            "example": "64130cfd81890e8d9b58581d"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/University"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "university not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/universities/": {
+      "get": {
+        "summary": "Get an university by id",
+        "description": "this route gets an university by its id",
+        "tags": ["university"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "example": 1
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "example": "brazil"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/University"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/universities/{universityToBeUpdatedId}": {
+      "put": {
+        "summary": "Get an university by id",
+        "description": "this route gets an university by its id",
+        "tags": ["university"],
+        "parameters": [
+          {
+            "name": "universityToBeUpdatedId",
+            "in": "path",
+            "required": true,
+            "example": "64130cfd81890e8d9b58581d"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "web_pages": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "nullable": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "domains": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "nullable": true
+                  }
+                }
+              },
+              "examples": {
+                "university": {
+                  "value": {
+                    "domains": ["claeh.edu.uy"],
+                    "web_pages": ["http://www.claeh.edu.uy/"],
+                    "name": "Insituto Universitario - Centro Latinoamericano de Economia Humana - IU Claeh"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/University"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "university not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/universities/{universityToBeDeletedId}": {
+      "delete": {
+        "summary": "Get an university by id",
+        "description": "this route gets an university by its id",
+        "tags": ["university"],
+        "parameters": [
+          {
+            "name": "universityToBeDeletedId",
+            "in": "path",
+            "required": true,
+            "example": "64130cfd81890e8d9b58581d"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/University"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "university not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
