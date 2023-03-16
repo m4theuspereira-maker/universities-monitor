@@ -1,6 +1,5 @@
 import {
   IUserDto,
-  IUserModel,
   User
 } from "../infra/database/mongodb/models/user-model";
 import { InternalServerErrorExpection } from "../infra/errors/erros";
