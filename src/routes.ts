@@ -1,7 +1,11 @@
 import express, { Router } from "express";
-import { universitiesControllerFactory } from "./factories/controller-factories";
+import {
+  universitiesControllerFactory,
+  userControllerFactory
+} from "./factories/controller-factories";
 
 const universityController = universitiesControllerFactory();
+const userController = userControllerFactory();
 
 const routes = Router();
 
@@ -22,5 +26,9 @@ routes.delete(
   "/universities/:universityToBeDeletedId",
   universityController.deleteUniversity
 );
+
+routes.post("/user/create", userController.createUser);
+routes.post("/user/login", userController.login);
+routes.put("/user/reset", userController.resetPassword);
 
 export { routes };

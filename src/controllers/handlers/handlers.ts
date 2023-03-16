@@ -19,3 +19,7 @@ export const ok = (res: Response, data: any): Response => {
 
   return res.status(200).json({ body: data });
 };
+
+export const unauthorizedError = (res: Response, message: any): Response => {
+  return res.status(403).json({ error: message });
+};
