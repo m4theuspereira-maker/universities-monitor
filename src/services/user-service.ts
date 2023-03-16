@@ -1,7 +1,4 @@
-import {
-  IUserDto,
-  User
-} from "../infra/database/mongodb/models/user-model";
+import { IUserDto, User } from "../infra/database/mongodb/models/user-model";
 import { InternalServerErrorExpection } from "../infra/errors/erros";
 import { UserRepository } from "../infra/reposiroties/user-repository";
 import * as bcrypt from "bcrypt";
@@ -33,9 +30,12 @@ export class UserService {
         return null;
       }
 
-      const validPasword = await bcrypt.compare(password, userFound.password);
+      const validPaswordHashed = await bcrypt.compare(
+        password,
+        userFound.password
+      );
 
-      if (!validPasword) {
+      if (!validPaswordHashed) {
         return null;
       }
 
@@ -43,7 +43,7 @@ export class UserService {
         expiresIn: "1d"
       });
 
-      return { username, password, token };
+      return { username, password: validPaswordHashed, token };
     } catch (error) {
       throw new InternalServerErrorExpection();
     }
