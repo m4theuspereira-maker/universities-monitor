@@ -4,8 +4,9 @@ import { UniversityModel } from "../infra/database/mongodb/models/university-mod
 import { UserModel } from "../infra/database/mongodb/models/user-model";
 import { UniversityRepository } from "../infra/reposiroties/university-repository";
 import { UserRepository } from "../infra/reposiroties/user-repository";
+import { EncryptionServices } from "../services/encryption-services";
 import { UniversityServices } from "../services/university-services";
-import { UserService } from "../services/user-service";
+import { UserServices } from "../services/user-services";
 
 export function universitiesControllerFactory(): UniversityController {
   const universityRepository = new UniversityRepository(UniversityModel);
@@ -13,10 +14,9 @@ export function universitiesControllerFactory(): UniversityController {
   return new UniversityController(unversityService);
 }
 
-
-export function userControllerFactory ():UserController{
-  const userRepository = new UserRepository(UserModel)
-  const userService = new UserService(userRepository)
-  return new UserController(userService)
+export function userControllerFactory(): UserController {
+  const userRepository = new UserRepository(UserModel);
+  const encryptionService = new EncryptionServices();
+  const userServices = new UserServices(userRepository, encryptionService);
+  return new UserController(userServices);
 }
-

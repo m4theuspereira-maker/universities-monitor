@@ -1,15 +1,17 @@
 import { IUserDto, User } from "../infra/database/mongodb/models/user-model";
 import { InternalServerErrorExpection } from "../infra/errors/erros";
 import { UserRepository } from "../infra/reposiroties/user-repository";
-import * as bcrypt from "bcrypt";
-import * as jwt from "jsonwebtoken";
-import { APP_SECRET } from "../config/environment-consts";
-export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+import { EncryptionServices } from "./encryption-services";
+
+export class UserServices {
+  constructor(
+    private readonly userRepository: UserRepository,
+    private encryptionService: EncryptionServices
+  ) {}
 
   async createUser({ username, password }: User) {
     try {
-      const passwordHash = await bcrypt.hash(password, 8);
+      const passwordHash = await this.encryptionService.hashPassword(password);
 
       return await this.userRepository.save({
         username,
@@ -30,7 +32,7 @@ export class UserService {
         return null;
       }
 
-      const validPaswordHashed = await bcrypt.compare(
+      const validPaswordHashed = await this.encryptionService.validatePassword(
         password,
         userFound.password
       );
@@ -39,9 +41,7 @@ export class UserService {
         return null;
       }
 
-      const token = jwt.sign({ username, password }, APP_SECRET as string, {
-        expiresIn: "1d"
-      });
+      const token = this.encryptionService.encryptToken(username, password);
 
       return { username, password: validPaswordHashed, token };
     } catch (error) {
@@ -63,7 +63,7 @@ export class UserService {
         return null;
       }
 
-      const validPasword = await bcrypt.compare(
+      const validPasword = await this.encryptionService.validatePassword(
         oldPassword,
         userFound.password!
       );
@@ -72,7 +72,9 @@ export class UserService {
         return null;
       }
 
-      const newPasswordHashed = await bcrypt.hash(newPassword, 8);
+      const newPasswordHashed = await this.encryptionService.hashPassword(
+        newPassword
+      );
 
       const userUpdated = await this.userRepository.update(userFound._id!, {
         password: newPasswordHashed
@@ -82,13 +84,7 @@ export class UserService {
         return null;
       }
 
-      const token = jwt.sign(
-        { username, password: newPassword },
-        APP_SECRET as string,
-        {
-          expiresIn: "1d"
-        }
-      );
+      const token = this.encryptionService.encryptToken(username, newPassword);
 
       return { ...userUpdated._doc, token };
     } catch (error) {

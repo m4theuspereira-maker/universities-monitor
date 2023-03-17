@@ -3,10 +3,11 @@ import {
   universitiesControllerFactory,
   userControllerFactory
 } from "./factories/controller-factories";
-import { requireAuth } from "./middlewares/authentication-middlewares";
+import { middlewaresFactory } from "./factories/middlewares-factory";
 
 const universityController = universitiesControllerFactory();
 const userController = userControllerFactory();
+const encryptionService = middlewaresFactory();
 
 const routes = Router();
 
@@ -15,23 +16,27 @@ routes.use(express.urlencoded({ extended: true }));
 
 routes.post(
   "/universities",
-  requireAuth,
+  encryptionService.requireAuthentication,
   universityController.createUniversity
 );
-routes.get("/universities", requireAuth, universityController.getUniversities);
+routes.get(
+  "/universities",
+  encryptionService.requireAuthentication,
+  universityController.getUniversities
+);
 routes.get(
   "/universities/:universityId",
-  requireAuth,
+  encryptionService.requireAuthentication,
   universityController.getUniversityById
 );
 routes.put(
   "/universities/:universityToBeUpdatedId",
-  requireAuth,
+  encryptionService.requireAuthentication,
   universityController.updateUniversity
 );
 routes.delete(
   "/universities/:universityToBeDeletedId",
-  requireAuth,
+  encryptionService.requireAuthentication,
   universityController.deleteUniversity
 );
 

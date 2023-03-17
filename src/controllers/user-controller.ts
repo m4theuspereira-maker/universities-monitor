@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { User } from "../infra/database/mongodb/models/user-model";
-import { UserService } from "../services/user-service";
+import { UserServices } from "../services/user-services";
 import {
   badrequestError,
   ok,
@@ -9,7 +9,7 @@ import {
 } from "./handlers/handlers";
 
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserServices) {}
 
   createUser = async (req: Request, res: Response) => {
     try {
