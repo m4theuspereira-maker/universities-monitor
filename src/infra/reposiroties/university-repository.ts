@@ -24,7 +24,6 @@ export class UniversityRepository implements IReposiroty {
     try {
       return (await this.universityModel.create(university)).save();
     } catch (error) {
-      console.log(error);
       throw new InternalServerErrorExpection();
     }
   }
@@ -74,9 +73,8 @@ export class UniversityRepository implements IReposiroty {
     }
   }
 
-  async updasert(updatePayload: any, count: number): Promise<void> {
+  async updasert(updatePayload: any): Promise<void> {
     try {
-      console.log("COUNT", count);
       const univertsityFound = await this.universityModel.findOne({
         name: updatePayload.name
       });

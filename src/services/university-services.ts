@@ -62,24 +62,20 @@ export class UniversityServices {
   }
 
   async upserMany(updatePayload: []) {
-    let count = 0;
-
     try {
-      console.log(updatePayload.length);
       await asyncParallelForEach(
         updatePayload,
         10000,
         async (university) => {
-          await this.universityrepository.updasert(university, count++);
-          count++;
+          await this.universityrepository.updasert(university);
         },
         {
-          times: 10, // try at most 3 times
+          times: 10,
           interval: BACK_OFF_RETRY.randomBetween(100, 3000)
         }
       );
     } catch (error) {
-      console.log(error);
+      throw new InternalServerErrorExpection();
     }
   }
 }
