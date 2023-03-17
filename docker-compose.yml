@@ -13,6 +13,9 @@ services:
       - "3000:3000"
     volumes:
       - "./:/app"
+    networks:
+      - mongo-compose-network
+
   mongo:
     image: mongo
     environment:

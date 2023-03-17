@@ -39,9 +39,15 @@ export class UniversityController {
         page: number;
       };
 
+      let countryCaptalized;
+
+      if (country) {
+        countryCaptalized = country.charAt(0).toUpperCase() + country.slice(1);
+      }
+
       const universitiesFound = await this.universityService.findMany(
         Number(page),
-        country
+        countryCaptalized
       );
 
       return ok(res, universitiesFound);
@@ -73,7 +79,6 @@ export class UniversityController {
       const { universityToBeUpdatedId } = req.params;
       const updatePaylaod = req.body;
 
-
       const universitiesFound = await this.universityService.updateUniversity(
         universityToBeUpdatedId,
         { ...updatePaylaod }
@@ -94,7 +99,7 @@ export class UniversityController {
       const { universityToBeDeletedId } = req.params;
 
       const universityDeleted = await this.universityService.deleteUniversity(
-        universityToBeDeletedId,
+        universityToBeDeletedId
       );
 
       if (!universityDeleted) {
