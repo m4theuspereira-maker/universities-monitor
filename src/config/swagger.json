@@ -430,6 +430,21 @@
                 }
               }
             }
+          },
+          "409": {
+            "description": "CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "there's already an user with that username"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

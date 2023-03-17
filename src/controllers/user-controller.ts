@@ -3,6 +3,7 @@ import { User } from "../infra/database/mongodb/models/user-model";
 import { UserServices } from "../services/user-services";
 import {
   badrequestError,
+  conflictError,
   ok,
   serverError,
   unauthorizedError
@@ -23,6 +24,10 @@ export class UserController {
         username,
         password
       });
+
+      if (!userCreated) {
+        return conflictError(res, "there's already an user with that username");
+      }
 
       return ok(res, userCreated);
     } catch (error) {

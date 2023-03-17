@@ -11,6 +11,12 @@ export class UserServices {
 
   async createUser({ username, password }: User) {
     try {
+      const userFound = await this.userRepository.findOne({ username });
+
+      if (userFound) {
+        return null;
+      }
+
       const passwordHash = await this.encryptionService.hashPassword(password);
 
       return await this.userRepository.save({

@@ -23,3 +23,9 @@ export const ok = (res: Response, data: any): Response => {
 export const unauthorizedError = (res: Response, message: any): Response => {
   return res.status(403).json({ error: message });
 };
+
+export const conflictError = (res: Response, message: any): Response => {
+  return res.status(409).json({ error: message });
+};
+
+
