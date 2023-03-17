@@ -24,6 +24,7 @@ export class UniversityRepository implements IReposiroty {
     try {
       return (await this.universityModel.create(university)).save();
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorExpection();
     }
   }
@@ -68,6 +69,31 @@ export class UniversityRepository implements IReposiroty {
         { updated_at: new Date(), ...updatePayload },
         { new: true }
       );
+    } catch (error) {
+      throw new InternalServerErrorExpection();
+    }
+  }
+
+  async updasert(updatePayload: any, count: number): Promise<void> {
+    try {
+      console.log("COUNT", count);
+      const univertsityFound = await this.universityModel.findOne({
+        name: updatePayload.name
+      });
+
+      if (!univertsityFound) {
+        await this.universityModel.create({
+          _id: new mongoose.Types.ObjectId(),
+          ...updatePayload
+        });
+        return;
+      }
+
+      await this.universityModel.updateOne(
+        { _id: univertsityFound._id },
+        { ...updatePayload, updated_at: new Date() }
+      );
+      return;
     } catch (error) {
       throw new InternalServerErrorExpection();
     }

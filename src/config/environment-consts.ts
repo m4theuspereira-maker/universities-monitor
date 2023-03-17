@@ -11,7 +11,7 @@ export const SWAGGER_DOCS = swaggerDocs;
 export const APP_SECRET = process.env.APP_SECRET;
 export const COUNTRIES_UNIVERSITIES_TO_BE_TAKEN = [
   "argentina",
-  "brasil",
+  "brazil",
   "chile",
   "colombia",
   "paraguai",
