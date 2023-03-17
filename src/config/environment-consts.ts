@@ -19,3 +19,4 @@ export const COUNTRIES_UNIVERSITIES_TO_BE_TAKEN = [
   "suriname",
   "uruguay"
 ];
+export const TIME_TO_RUN_SCHEDULE = "00 */24 * * *";

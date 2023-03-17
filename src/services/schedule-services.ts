@@ -2,8 +2,8 @@ import { InternalServerErrorExpection } from "../infra/errors/erros";
 import { UniversityServices } from "./university-services";
 import cron from "node-cron";
 import { AxiosAdapter } from "./adapters/adapters";
-import { UniversityRepository } from "../infra/reposiroties/university-repository";
 import { COUNTRIES_UNIVERSITIES_TO_BE_TAKEN } from "../config/environment-consts";
+import {} from "node-cron";
 
 interface IUniversity {
   "state-province": string | null;
@@ -20,28 +20,23 @@ export class ScheduleService {
     private readonly universityService: UniversityServices
   ) {}
 
-  async scheduleJob(): Promise<void> {
+  async scheduleJob(timeToSchedule: string): Promise<void> {
     try {
-      // cron.schedule("", async () => {
-      //   const universitiesFound = await axios.get(
-      //     "http://universities.hipolabs.com/search?country=uruguay"
-      //   );
-      // });
+      console.log("começou");
+      const task = cron.schedule(
+        timeToSchedule,
+        async () => {
+          await this.getUniversitiesByCountry(
+            COUNTRIES_UNIVERSITIES_TO_BE_TAKEN
+          );
+        },
+        {
+          scheduled: false,
+          timezone: "America/Sao_Paulo"
+        }
+      );
 
-      // const { data } = await this.axios(
-      //   "http://universities.hipolabs.com/search?country=uruguay"
-      // );
-
-      // const universitiesMapped = data.map((university: IUniversity) => {
-      //   return {
-      //     state_province: university["state-province"],
-      //     ...university
-      //   };
-      // });
-
-      // console.log(universitiesMapped);
-
-      await this.getUniversitiesByCountry(COUNTRIES_UNIVERSITIES_TO_BE_TAKEN);
+      task.start();
     } catch (error) {
       throw new InternalServerErrorExpection();
     }
@@ -68,6 +63,7 @@ export class ScheduleService {
         if (universitiesMapped.length > 0) {
           await this.universityService.upserMany(universitiesMapped);
         }
+        console.log(count);
         count++;
 
         if (count >= countries.length) {
