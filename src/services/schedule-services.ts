@@ -22,7 +22,6 @@ export class ScheduleService {
 
   async scheduleJob(timeToSchedule: string): Promise<void> {
     try {
-      console.log("começou");
       const task = cron.schedule(
         timeToSchedule,
         async () => {
