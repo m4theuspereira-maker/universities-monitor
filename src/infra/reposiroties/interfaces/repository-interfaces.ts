@@ -1,5 +1,3 @@
-import { ObjectId } from "mongoose";
-
 export interface IReposiroty {
   save(input: any): Promise<any>;
 
