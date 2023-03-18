@@ -8,7 +8,7 @@ jobs:
   setup-project:
     docker:
       - image: node
-      - image: circleci/mongo:5.0.13
+      - image: circleci/mongo:4.4
         auth:
           # these env vars are setted in circleci configs
           # if you wanna implement CI/CD with circleci checkout the docummentation in https://circleci.com/docs/
