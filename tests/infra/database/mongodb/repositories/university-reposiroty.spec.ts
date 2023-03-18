@@ -15,10 +15,10 @@ describe("UniversityReposiroty", () => {
   let universities: IUniversityModel[];
 
   beforeAll(async () => {
-    jest.setTimeout(6000);
     await startDatabase();
     await seedDatabase();
     universityRepository = new UniversityRepository(universityModel);
+    jest.setTimeout(6000);
   });
 
   afterAll(async () => {
