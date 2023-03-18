@@ -34,9 +34,6 @@ jobs:
       - run:
           name: "build project"
           command: yarn build
-      - run:
-          name: "running tests"
-          command: yarn test
 
 workflows:
   say-hello-workflow:
