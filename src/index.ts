@@ -11,9 +11,9 @@ import swaggerUi from "swagger-ui-express";
 import { scheduleServiceFactories } from "./factories/service-factories";
 
 const app = express();
+app.use(cors());
 app.use(routes);
 const server = app.listen(PORT, async () => {
-  app.use(cors());
   app.use("/api", swaggerUi.serve, swaggerUi.setup(SWAGGER_DOCS));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));

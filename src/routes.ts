@@ -1,4 +1,5 @@
 import express, { Router } from "express";
+import cors from "cors";
 import {
   universitiesControllerFactory,
   userControllerFactory
@@ -11,6 +12,7 @@ const encryptionService = middlewaresFactory();
 
 const routes = Router();
 
+routes.use(cors())
 routes.use(express.json());
 routes.use(express.urlencoded({ extended: true }));
 
